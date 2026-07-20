@@ -3,7 +3,7 @@ import { Header } from '@/components/common/header';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 
-export default async function DashboardLayout({
+export async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
