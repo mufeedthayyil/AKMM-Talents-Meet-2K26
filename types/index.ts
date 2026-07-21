@@ -1,4 +1,4 @@
-// Domain Definitions & TypeScript Types for AKMM Talents Meet Management System
+// AKMM Talents Meet Management System (ATMMS) Domain Types
 
 export type UserRole = 'ADMIN' | 'LEADER' | 'ASSISTANT' | 'STUDENT';
 export type GenderType = 'MALE' | 'FEMALE' | 'OTHER';
@@ -18,6 +18,7 @@ export interface User {
   full_name: string;
   role: UserRole;
   team_id?: string;
+  team?: Team;
   created_at: string;
   updated_at: string;
 }
@@ -159,17 +160,6 @@ export interface ActivityLog {
   details?: any;
   ip_address?: string;
   created_at: string;
-}
-
-export interface LeaderboardItem {
-  team_id: string;
-  team_name: string;
-  team_code: string;
-  team_color: string;
-  logo_url?: string;
-  total_points: number;
-  total_students: number;
-  rank: number;
 }
 
 export interface ActionResponse<T = any> {

@@ -60,7 +60,6 @@ export function exportToCSV(data: any[], fileName: string) {
 export function generateStudentsPDF(students: Student[], title: string = 'Student Roster Report') {
   const doc = new jsPDF();
   
-  // Header
   doc.setFontSize(18);
   doc.setTextColor(30, 58, 138); // Blue theme
   doc.text('AKMM TALENTS MEET MANAGEMENT SYSTEM', 14, 20);
@@ -192,7 +191,6 @@ export async function generateIDCardsPDF(
     format: 'a4',
   });
 
-  // A4 dimensions: 210mm x 297mm
   const pageWidth = 210;
   const cardWidth = 160;
   const cardHeight = cardsPerPage === 3 ? 80 : 62;
@@ -211,30 +209,30 @@ export async function generateIDCardsPDF(
     const student = students[i];
     const y = marginY + currentCardOnPage * (cardHeight + spacingY);
 
-    // Card Outer Border & Shadow Card Background
+    // Outer Card Border
     doc.setLineWidth(0.5);
     doc.setDrawColor(220, 226, 235);
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(startX, y, cardWidth, cardHeight, 4, 4, 'FD');
 
-    // Header Banner (Blue)
-    doc.setFillColor(30, 58, 138); // Primary Blue
+    // Header Banner
+    doc.setFillColor(30, 58, 138);
     doc.roundedRect(startX, y, cardWidth, 16, 4, 4, 'F');
-    doc.rect(startX, y + 8, cardWidth, 8, 'F'); // Fill lower rounded corners
+    doc.rect(startX, y + 8, cardWidth, 8, 'F');
 
     doc.setFontSize(11);
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
     doc.text('AKMM COLLEGE TALENTS MEET 2026', startX + cardWidth / 2, y + 10, { align: 'center' });
 
-    // Team Color Accent Bar
+    // Team Accent Color Bar
     const teamColorHex = student.team?.color || '#3B82F6';
     doc.setFillColor(teamColorHex);
     doc.rect(startX, y + 16, cardWidth, 3, 'F');
 
-    // Student Details
+    // Student Information
     doc.setFontSize(12);
-    doc.setTextColor(15, 23, 42); // Dark slate
+    doc.setTextColor(15, 23, 42);
     doc.setFont('helvetica', 'bold');
     doc.text(student.name, startX + 15, y + 27);
 
@@ -246,7 +244,7 @@ export async function generateIDCardsPDF(
     doc.text(`Gender: ${student.gender}`, startX + 15, y + 46);
     doc.text(`Team: ${student.team?.name || 'Unassigned'}`, startX + 15, y + 52);
 
-    // QR Code
+    // Verification QR Code
     const qrDataUrl = await generateQRCodeDataURL(`ATMMS-STUDENT:${student.uid}:${student.name}`);
     if (qrDataUrl) {
       doc.addImage(qrDataUrl, 'PNG', startX + cardWidth - 45, y + 24, 32, 32);
@@ -255,7 +253,7 @@ export async function generateIDCardsPDF(
       doc.text('Scan for Verification', startX + cardWidth - 29, y + 59, { align: 'center' });
     }
 
-    // Card Footer
+    // Card Footer Line
     doc.setDrawColor(241, 245, 249);
     doc.line(startX + 10, y + cardHeight - 10, startX + cardWidth - 10, y + cardHeight - 10);
     doc.setFontSize(7);

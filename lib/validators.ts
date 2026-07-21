@@ -1,19 +1,19 @@
 import { z } from 'zod';
 
 export const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Invalid email address format'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 export const studentLoginSchema = z.object({
-  uid: z.string().min(3, 'UID is required (e.g. ATM2026-001)'),
+  uid: z.string().min(3, 'Student UID is required (e.g. ATM2026-001)'),
 });
 
 export const teamSchema = z.object({
   id: z.string().optional(),
-  name: z.string().min(2, 'Team name is required'),
-  code: z.string().min(2, 'Team code is required'),
-  color: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Invalid hex color'),
+  name: z.string().min(2, 'Team name must be at least 2 characters'),
+  code: z.string().min(2, 'Team code must be at least 2 characters'),
+  color: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Invalid hex color code'),
   logo_url: z.string().optional().or(z.literal('')),
   leader_id: z.string().optional().nullable(),
   assistant_id: z.string().optional().nullable(),
@@ -21,8 +21,8 @@ export const teamSchema = z.object({
 
 export const studentSchema = z.object({
   id: z.string().optional(),
-  uid: z.string().min(3, 'UID is required'),
-  name: z.string().min(2, 'Student name is required'),
+  uid: z.string().min(3, 'Unique Identification Code (UID) is required'),
+  name: z.string().min(2, 'Student full name is required'),
   gender: z.enum(['MALE', 'FEMALE', 'OTHER']),
   category: z.enum(['JUNIOR', 'SENIOR']),
   team_id: z.string().min(1, 'Team selection is required'),
@@ -43,7 +43,7 @@ export const programmeSchema = z.object({
 export const scheduleSchema = z.object({
   id: z.string().optional(),
   programme_id: z.string().min(1, 'Programme selection is required'),
-  venue: z.string().min(2, 'Venue is required'),
+  venue: z.string().min(2, 'Venue location is required'),
   event_date: z.string().min(1, 'Date is required'),
   event_time: z.string().min(1, 'Time is required'),
   round: z.string().default('Finals'),
@@ -51,8 +51,8 @@ export const scheduleSchema = z.object({
 });
 
 export const assignmentSchema = z.object({
-  student_id: z.string().min(1, 'Student is required'),
-  programme_id: z.string().min(1, 'Programme is required'),
+  student_id: z.string().min(1, 'Student selection is required'),
+  programme_id: z.string().min(1, 'Programme selection is required'),
   team_id: z.string().min(1, 'Team is required'),
 });
 
@@ -72,9 +72,9 @@ export const resultSchema = z.object({
 export const appealSchema = z.object({
   id: z.string().optional(),
   programme_id: z.string().min(1, 'Programme selection is required'),
-  team_id: z.string().min(1, 'Team is required'),
+  team_id: z.string().min(1, 'Team selection is required'),
   title: z.string().min(3, 'Appeal title is required'),
-  description: z.string().min(10, 'Detailed description is required'),
+  description: z.string().min(10, 'Detailed appeal description is required'),
   proof_url: z.string().optional().or(z.literal('')),
 });
 
